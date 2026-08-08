@@ -1,0 +1,23 @@
+AskMyCity Research Engine (v0.6.3)
+==================================
+
+What changed
+------------
+- Research runs in waves instead of stopping after the first three businesses.
+- Each wave researches up to AI_RESEARCH_BATCH_SIZE businesses in parallel.
+- It stops after AI_RESEARCH_TARGET_RESULTS verified matches are found or after
+  AI_RESEARCH_MAX_CANDIDATES candidates have been checked.
+- Positive AND negative findings are cached by business + cuisine + dish + price.
+- Repeating the same search reuses the cache and avoids paying for the same web
+  research again.
+- AI profile facts are merged, not blindly overwritten, so prior menu knowledge
+  remains available for later searches.
+
+Recommended starting values
+---------------------------
+AI_RESEARCH_BATCH_SIZE=3
+AI_RESEARCH_MAX_CANDIDATES=12
+AI_RESEARCH_TARGET_RESULTS=3
+
+The first difficult search can still take several minutes. Later identical
+searches should be much faster because completed research is cached.

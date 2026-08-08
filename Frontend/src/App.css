@@ -1,0 +1,6 @@
+* { box-sizing: border-box; }
+html, body, #root { min-height: 100%; margin: 0; }
+body { overflow-x: hidden; overflow-y: auto; }
+button, textarea, input, select { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+.app-shell { width: 100%; min-height: 100vh; background: #fbfcfa; color: #132019; }

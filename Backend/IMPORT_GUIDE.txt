@@ -1,0 +1,56 @@
+ASKMYCITY DATA IMPORT - NEXT STEPS
+==================================
+
+1) Open PowerShell in this Backend folder.
+
+2) Activate your environment:
+   .\.venv\Scripts\Activate.ps1
+
+3) Install the one new Excel dependency:
+   pip install -r requirements.txt
+
+4) Import the Ottawa restaurant file you already paid for:
+   python import_places.py
+
+   Important: this command reads the included XLSX file. It does NOT call
+   Outscraper and does NOT spend additional credit.
+
+5) Optional: import the existing plumber CSV:
+   python import_places.py --plumbers
+
+6) Start the backend normally:
+   uvicorn main:app --reload --port 8001
+
+WHAT THE IMPORTER DOES
+----------------------
+- Adds new businesses.
+- Updates existing businesses.
+- Detects duplicates using place_id, google_id, cid, then business_id.
+- Imports ratings, review counts, star distribution, hours, features,
+  photos, status, website, phone, address, and coordinates.
+- Records each import in the import_batches table.
+
+OUTSCRAPER API SAFETY
+---------------------
+The future API client is in outscraper_client.py.
+It blocks an Ottawa restaurant API request by default because that dataset
+has already been purchased. The current import command never calls the API.
+
+
+LOCATION AND RESTAURANT SEARCH FIX (v2)
+---------------------------------------
+After replacing the backend, run the restaurant import again:
+
+    python import_places.py
+
+This does NOT call Outscraper and does NOT charge your account. It only rereads
+the Excel file already stored in the Backend folder. Existing rows are updated
+by Place ID and their canonical category becomes "restaurant".
+
+Then restart the backend:
+
+    uvicorn main:app --reload --port 8001
+
+The fix also ensures that a later city request such as "restaurants in Ottawa"
+is not incorrectly overridden by GPS coordinates saved from an earlier
+"near me" request.

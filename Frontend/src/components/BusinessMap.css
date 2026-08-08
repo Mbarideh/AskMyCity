@@ -1,0 +1,260 @@
+.business-map-wrapper {
+  position: relative;
+
+  width: 100%;
+  min-height: 620px;
+
+  overflow: hidden;
+
+  background: #ffffff;
+
+  border: 1px solid #e1e6ef;
+  border-radius: 20px;
+
+  box-shadow: 0 14px 40px rgba(26, 37, 58, 0.1);
+}
+
+.business-map {
+  width: 100%;
+  height: 620px;
+}
+
+/*
+  Keep map controls underneath our custom controls.
+*/
+.business-map .leaflet-control-container {
+  position: relative;
+  z-index: 500;
+}
+
+/*
+  Current-location control
+*/
+.location-control {
+  position: absolute;
+  top: 84px;
+  left: 10px;
+  z-index: 1000;
+}
+
+.location-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 36px;
+  height: 36px;
+
+  padding: 0;
+
+  border: 2px solid rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+
+  background: #ffffff;
+  color: #263044;
+
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2);
+
+  cursor: pointer;
+}
+
+.location-button:hover {
+  background: #f4f6fa;
+  color: #2454d6;
+}
+
+.location-button:disabled {
+  cursor: wait;
+  opacity: 0.75;
+}
+
+.location-symbol {
+  font-size: 25px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.location-spinner {
+  width: 17px;
+  height: 17px;
+
+  border: 2px solid #d8deea;
+  border-top-color: #2454d6;
+  border-radius: 50%;
+
+  animation: location-spin 0.7s linear infinite;
+}
+
+@keyframes location-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/*
+  User's blue location dot
+*/
+.user-location-marker {
+  background: transparent;
+  border: 0;
+}
+
+.user-location-dot {
+  position: relative;
+
+  width: 20px;
+  height: 20px;
+
+  background: #2563eb;
+
+  border: 4px solid #ffffff;
+  border-radius: 50%;
+
+  box-shadow:
+    0 2px 7px rgba(0, 0, 0, 0.3),
+    0 0 0 2px rgba(37, 99, 235, 0.25);
+}
+
+.user-location-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  width: 36px;
+  height: 36px;
+
+  background: rgba(37, 99, 235, 0.2);
+  border-radius: 50%;
+
+  transform: translate(-50%, -50%);
+
+  animation: location-pulse 2s infinite;
+}
+
+@keyframes location-pulse {
+  0% {
+    transform: translate(-50%, -50%) scale(0.65);
+    opacity: 0.8;
+  }
+
+  100% {
+    transform: translate(-50%, -50%) scale(1.4);
+    opacity: 0;
+  }
+}
+
+/*
+  Location error notification
+*/
+.location-error {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  z-index: 1200;
+
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  max-width: calc(100% - 40px);
+  padding: 12px 16px;
+
+  background: #ffffff;
+  color: #9f1d1d;
+
+  border: 1px solid #fecaca;
+  border-radius: 10px;
+
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+
+  transform: translateX(-50%);
+}
+
+.location-error button {
+  padding: 0;
+
+  border: 0;
+  background: transparent;
+
+  color: #9f1d1d;
+  font-size: 22px;
+  line-height: 1;
+
+  cursor: pointer;
+}
+
+/*
+  Marker popups
+*/
+.map-popup {
+  min-width: 190px;
+}
+
+.map-popup h3 {
+  margin: 0 0 6px;
+
+  color: #172033;
+  font-size: 1rem;
+}
+
+.map-popup p {
+  margin: 6px 0;
+
+  color: #536078;
+}
+
+.map-popup-category {
+  text-transform: capitalize;
+}
+
+.map-popup-button {
+  width: 100%;
+  margin-top: 9px;
+  padding: 9px 12px;
+
+  background: #2454d6;
+  color: #ffffff;
+
+  border: 0;
+  border-radius: 8px;
+
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.map-popup-button:hover {
+  background: #1d46b4;
+}
+
+/*
+  Slightly modernize Leaflet's standard controls.
+*/
+.business-map .leaflet-bar {
+  overflow: hidden;
+
+  border: 0;
+  border-radius: 8px;
+
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.18);
+}
+
+.business-map .leaflet-bar a {
+  border-bottom-color: #e4e8ef;
+}
+
+.business-map .leaflet-popup-content-wrapper {
+  border-radius: 12px;
+}
+
+@media (max-width: 760px) {
+  .business-map-wrapper,
+  .business-map {
+    min-height: 500px;
+    height: 500px;
+  }
+
+  .location-error {
+    top: 12px;
+    width: calc(100% - 48px);
+  }
+}

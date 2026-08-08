@@ -1,0 +1,26 @@
+Project Name:
+AskMyCity
+
+Mission:
+Help people find the best local services using AI.
+
+Priority:
+1. Providers registered on our platform
+2. Partner platforms
+3. Google
+
+Users:
+Residents
+Newcomers
+Students
+Families
+
+Languages:
+English
+Persian
+Future: French
+
+Revenue:
+Bookings
+Subscriptions
+Affiliate partnerships

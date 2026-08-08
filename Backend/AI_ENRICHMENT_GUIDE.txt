@@ -1,0 +1,57 @@
+ASKMYCITY AI ENRICHMENT V2
+==========================
+
+This version separates four kinds of evidence:
+- cuisine
+- menu availability
+- dish reputation from public reviews/articles
+- price/value
+
+Each area has its own confidence level. Missing evidence stays empty.
+
+1. Test dataset-only mode
+-------------------------
+python enrich_places.py --category restaurant --city Ottawa --limit 5 --force
+
+Dataset-only mode is inexpensive, but cuisine/menu/price claims must stay empty
+or low-confidence unless those facts already exist in your imported record.
+
+2. Test evidence-based web mode
+-------------------------------
+python enrich_places.py --category restaurant --city Ottawa --limit 5 --web --force
+
+Web mode searches public sources. It prioritizes official websites and menus,
+then uses accessible public review or local-guide sources for subjective claims.
+
+The previous 400 error is fixed: web mode no longer sends
+reasoning.effort=minimal together with web_search.
+
+3. Verify data in PostgreSQL
+----------------------------
+SELECT
+  p.id,
+  p.name,
+  a.cuisine_types_json,
+  a.cuisine_confidence,
+  a.menu_items_json,
+  a.menu_confidence,
+  a.dish_reputation_json,
+  a.price_level,
+  a.average_main_price_cad,
+  a.price_confidence,
+  a.source_urls_json
+FROM places p
+JOIN business_ai_profiles a ON a.place_id = p.id
+ORDER BY p.id
+LIMIT 5;
+
+4. Continue in small batches
+----------------------------
+python enrich_places.py --category restaurant --city Ottawa --limit 20 --web
+
+Existing rows are skipped unless --force is included.
+
+Important
+---------
+"Open now" is calculated from working_hours_json at search time; it is not
+stored as a permanent enrichment field.

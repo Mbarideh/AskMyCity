@@ -1,0 +1,56 @@
+AskMyCity v0.7 - Platform Foundation
+=====================================
+
+This release keeps the existing live search behavior and adds a clean,
+reusable knowledge platform underneath it.
+
+NEW MODULES
+-----------
+askmycity/core/config.py
+  Central environment-based cost and worker settings.
+
+askmycity/domain/research.py
+  Framework-independent research request/outcome objects.
+
+askmycity/application/research_queue.py
+  Durable PostgreSQL research queue. Duplicate completed or active jobs are
+  not added again.
+
+askmycity/application/knowledge_builder.py
+  Selects popular, not-yet-enriched businesses and queues them.
+
+askmycity/infrastructure/knowledge_repository.py
+  Stores AI knowledge separately from the imported Outscraper fields.
+
+askmycity/workers/knowledge_worker.py
+  Processes one queued business at a time and stores the result.
+
+ADMIN API
+---------
+GET  /admin/knowledge/summary
+POST /admin/knowledge/enqueue-popular?limit=5&city=Ottawa
+GET  /admin/knowledge/jobs
+
+HOW TO RUN
+----------
+Terminal 1 - API:
+  python -m uvicorn main:app --reload --port 8001
+
+Terminal 2 - knowledge worker:
+  python knowledge_worker.py
+
+To queue five popular Ottawa businesses, open this URL in Swagger or use:
+  POST http://localhost:8001/admin/knowledge/enqueue-popular?limit=5&city=Ottawa
+
+The worker researches one queued business at a time. This protects cost and
+lets you stop the worker whenever you choose.
+
+RECOMMENDED TEST SETTINGS
+-------------------------
+KNOWLEDGE_WORKER_BATCH_SIZE=1
+KNOWLEDGE_DAILY_LIMIT=5
+
+IMPORTANT
+---------
+Keep your current Backend/.env. It is intentionally not included.
+The new database table is created automatically when the API starts.

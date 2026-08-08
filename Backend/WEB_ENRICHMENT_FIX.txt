@@ -1,0 +1,31 @@
+AskMyCity AI Enrichment v3 - two-pass web research
+
+Why v2 returned an empty response
+---------------------------------
+The previous request asked one response to both perform web search and produce
+strict structured JSON. In your run, the API completed tool activity without a
+final text message, so response.output_text was empty.
+
+What v3 does
+------------
+Pass 1: OPENAI_WEB_SEARCH_MODEL performs web research and returns a concise
+        evidence report with sources.
+Pass 2: OPENAI_ENRICHMENT_MODEL converts that report into strict JSON.
+
+This is more reliable and also gives clearer error diagnostics.
+
+Test one restaurant first
+-------------------------
+python enrich_places.py --category restaurant --city Ottawa --limit 1 --web --force
+
+Then test five
+--------------
+python enrich_places.py --category restaurant --city Ottawa --limit 5 --web --force
+
+Environment variables
+---------------------
+OPENAI_ENRICHMENT_MODEL=gpt-5-mini
+OPENAI_WEB_SEARCH_MODEL=gpt-5.6
+
+If gpt-5.6 is not available to your API project, set OPENAI_WEB_SEARCH_MODEL to
+a currently available GPT-5 model that supports Responses API web_search.

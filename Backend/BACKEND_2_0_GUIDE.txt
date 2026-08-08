@@ -1,0 +1,39 @@
+AskMyCity Backend 2.0 — Research Connection Fix
+================================================
+
+What changed
+------------
+1. Old negative research cache rows are invalidated automatically because the
+   prompt version is now part of the cache key.
+2. Positive research is cached for 30 days.
+3. Negative research expires after 24 hours, so a temporary failure or missing
+   source does not block a business forever.
+4. Failed OpenAI calls are not reported as successful research.
+5. The website now tells you whether all research calls failed, instead of
+   incorrectly saying only that no saved evidence exists.
+6. A services/research_orchestrator.py boundary was added as the first Backend
+   2.0 service module. The existing endpoint remains compatible with the UI.
+
+Important test
+--------------
+Start Backend and Frontend, then search:
+    Homemade gnocchi under $25 in Ottawa
+
+Watch the Backend terminal. You should see either:
+- successful research and saved profiles, or
+- an exact error such as model access, timeout, web-search availability, or API
+  billing/quota failure.
+
+If every live research call fails, the website will now say that clearly.
+
+Environment
+-----------
+Keep your existing Backend/.env. Confirm it contains:
+    OPENAI_API_KEY=...
+    OPENAI_WEB_SEARCH_MODEL=gpt-5.6
+    OPENAI_ENRICHMENT_MODEL=gpt-5-mini
+
+Optional orchestrator settings:
+    AI_RESEARCH_BATCH_SIZE=3
+    AI_RESEARCH_MAX_CANDIDATES=12
+    AI_RESEARCH_TARGET_RESULTS=3

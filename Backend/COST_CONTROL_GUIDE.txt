@@ -1,0 +1,32 @@
+AskMyCity v0.6.5 - AI Cost Control
+
+This release places a hard limit on live research per user search.
+
+DEFAULT LIMITS
+- Query planner: 1 inexpensive gpt-5-mini call.
+- Live web research: at most 2 candidate businesses.
+- Research runs sequentially and stops as soon as 1 verified match is found.
+- Each researched candidate uses 1 web-research call and 1 small structuring call.
+- Web report output is capped at 1,400 tokens.
+- Structured JSON output is capped at 1,200 tokens.
+- Positive and negative research is cached, so the same candidate/request is not researched again while its cache is fresh.
+
+EXPECTED MAXIMUM FOR A NEW SPECIFIC-DISH SEARCH
+- 1 query-planner call
+- Up to 2 web-search calls
+- Up to 2 structuring calls
+
+This replaces the previous behavior that could research 12 businesses, which could create 24 enrichment model calls plus the planner.
+
+RECOMMENDED Backend/.env SETTINGS
+AI_RESEARCH_BATCH_SIZE=1
+AI_RESEARCH_MAX_CANDIDATES=2
+AI_RESEARCH_TARGET_RESULTS=1
+AI_WEB_MAX_OUTPUT_TOKENS=1400
+AI_STRUCTURE_MAX_OUTPUT_TOKENS=1200
+
+To make testing even cheaper, set AI_RESEARCH_MAX_CANDIDATES=1.
+To temporarily disable costly live research, set AI_RESEARCH_MAX_CANDIDATES=1 and use only cached results, or remove the web-search key/model configuration.
+
+IMPORTANT
+The imported Outscraper data is not changed. AI findings remain in business_ai_profiles and research cache tables.
