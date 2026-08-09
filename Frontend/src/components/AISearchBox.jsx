@@ -1,3 +1,4 @@
+
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -284,11 +285,13 @@ export default function AISearchBox({
         <>
           <main className="local-home-main">
             <section className="local-hero">
+              <div className="local-hero-orbit local-hero-orbit-one" aria-hidden="true" />
+              <div className="local-hero-orbit local-hero-orbit-two" aria-hidden="true" />
               <div className="local-hero-copy">
-                <p className="local-eyebrow"><span /> LOCAL DISCOVERY, MADE PERSONAL</p>
-                <h1>Find the right local place for <em>what you actually need.</em></h1>
+                <p className="local-eyebrow"><span /> YOUR CITY, BETTER SEARCHED</p>
+                <h1>Local answers for <em>real-life plans.</em></h1>
                 <p className="local-hero-description">
-                  Search restaurants and local services by distance, parking, family needs, dietary options, amenities, and more — not just by rating.
+                  Skip the endless tabs. Describe what you need and get thoughtful local matches based on distance, accessibility, amenities, and the details that matter to you.
                 </p>
                 <SearchComposer query={query} setQuery={setQuery} submitQuery={submitQuery} loading={loading} inputRef={searchInputRef} />
                 <div className="local-search-hints">
@@ -297,10 +300,15 @@ export default function AISearchBox({
                   <button type="button" onClick={() => submitQuery("Find family-friendly restaurants near me")}>Family-friendly</button>
                   <button type="button" onClick={() => submitQuery("Find restaurants with free parking near me")}>Free parking</button>
                 </div>
+                <div className="local-hero-proof" aria-label="AskMyCity benefits">
+                  <div><strong>One question</strong><span>instead of ten filters</span></div>
+                  <div><strong>Clear reasons</strong><span>behind every match</span></div>
+                  <div><strong>Local context</strong><span>built into results</span></div>
+                </div>
               </div>
 
               <aside className="local-hero-board" aria-label="Examples of local searches">
-                <div className="local-board-topline"><span>⌖</span><strong>Search like a local</strong><small>Tell us what matters</small></div>
+                <div className="local-board-topline"><span>⌖</span><strong>Try asking naturally</strong><small>Tap an idea to start</small></div>
                 <div className="local-board-grid">
                   {STARTER_PROMPTS.map((item) => (
                     <button type="button" key={item.prompt} onClick={() => submitQuery(item.prompt)}>

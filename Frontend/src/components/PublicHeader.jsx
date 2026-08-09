@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 
@@ -16,10 +17,10 @@ export default function PublicHeader({ compact = false }) {
     <header className={`public-header ${compact ? "compact" : ""}`}>
       <div className="public-header-inner">
         <Link className="public-brand" to="/" onClick={() => setMenuOpen(false)}>
-          <span className="public-brand-mark" aria-hidden="true">A</span>
+          <span className="public-brand-mark" aria-hidden="true"><i />A</span>
           <span>
             <strong>AskMyCity</strong>
-            <small>Local discovery</small>
+            <small>Know where to go</small>
           </span>
         </Link>
 
