@@ -1,4 +1,3 @@
-
 .local-discovery-page{min-height:100vh;display:flex;flex-direction:column;background:#fbfcfa;color:#132019}
 .local-home-main,.local-results-main{width:min(1240px,calc(100% - 40px));margin:0 auto}
 .local-home-main{padding:70px 0 82px}.local-results-main{padding:42px 0 80px}
